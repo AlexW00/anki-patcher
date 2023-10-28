@@ -1,0 +1,6 @@
+# reformats markdown to anki rich text
+
+replacements:
+  - "\\*([^(\\*)]+)\\*": "<i>\\1</i>" # italic
+  - "\\*\\*([^(\\*)]+)\\*\\*": "<b>\\1</b>" # bold
+  - "==([^(=)]+)==": "<span style='background-color: #897099'>\\1</span>" # highlight
