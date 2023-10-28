@@ -1,6 +1,5 @@
 import os
 
-from anki_patcher.util import parse_config
 from .anki import invoke
 import importlib.util
 
@@ -64,10 +63,13 @@ def execute_operation(note_info, config, operation_name):
     operation = operations.get(operation_name)
     operation(card_id, fields, config)
 
-def patch(operation_name, config):
-    [deck_name] = parse_config(["deck_name"], config)
+def patch(operation_name, deck_name, config):    
     note_infos = get_note_infos(deck_name)
+    if note_infos == []:
+        print(f"No cards found for deck: {deck_name}")
+        return
     
+    print(f"Patching {len(note_infos)} cards in deck: {deck_name}")
     for note_info in note_infos:
         execute_operation(note_info, config, operation_name)
 
@@ -75,7 +77,7 @@ def get_available_operations():
     operations = get_operations()
     available_operations = []
     for operation in operations:
-        available_operations.append(operation[0].split("/")[-1][:-10])
+        available_operations.append(operation[0].split("/")[-1])
     return available_operations
         
 

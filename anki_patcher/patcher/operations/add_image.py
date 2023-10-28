@@ -5,11 +5,16 @@ from anki_patcher.patcher.anki import clean_string_of_html_tags
 from anki_patcher.util import parse_config, parse_env, parse_fields
 
 def execute (card_id, fields, config):
+    # load env vars via helper function
     env = parse_env(["ANKI_MEDIA_FOLDER", "GOOGLE_API_KEY", "CX"])
+    # load config vars via helper function
     [search_input_field_name, image_field_name] = parse_config(["search_input_field_name", "image_field_name"], config)
+    # load card field values via helper function
     [search_input, existing_image] = parse_fields([search_input_field_name, image_field_name,], fields)
 
+    # clean search input of html tags
     clean_query = clean_string_of_html_tags(search_input)
+    # call the main operation function to add image to card
     add_image_to_card(card_id, clean_query, existing_image, image_field_name, env)
 
 
