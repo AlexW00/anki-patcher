@@ -1,1 +1,2 @@
 /.env
+global-exclude __pycache__
