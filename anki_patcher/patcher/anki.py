@@ -17,15 +17,6 @@ def invoke(action, params):
 
 # cleans a string of html tags such as li, div, etc
 def clean_string_of_html_tags(string):
-    no_opening = re.sub(r'<[^<]+?>', ';', string)
-    clean = re.sub(r';+', ',', no_opening)
-    # remove affix and suffix if = ","
-    if clean[0] == ",":
-        clean = clean[1:]
-    if clean[-1] == ",":
-        clean = clean[:-1]
-    # take MAX first 3 words
-    length = len(clean.split(","))
-    if length > 2:
-        clean = ','.join(clean.split(",")[:2])
-    return clean
+    # Use a regular expression to match HTML tags and replace them with an empty string
+    clean_string = re.sub(r'<[^>]*>', '', string)
+    return clean_string

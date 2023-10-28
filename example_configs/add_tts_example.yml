@@ -1,0 +1,6 @@
+audio_field_name: audio
+text_input_field_name: japanese
+
+# see https://cloud.google.com/text-to-speech/docs/voices
+language: ja-JP
+voice_name: ja-JP-Neural2-B
