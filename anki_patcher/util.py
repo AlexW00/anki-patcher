@@ -25,6 +25,7 @@ def parse_fields(field_names, fields):
         field_value = fields[field_name].get("value")
         if field_name == None:
             raise Exception(f"Field {field_name} must be set")
+        
         field_values.append(field_value)
     return field_values
 
