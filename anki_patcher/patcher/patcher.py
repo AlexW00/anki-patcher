@@ -60,7 +60,10 @@ def execute_operation(note_info, config, operation_name):
     fields = note_info.get("fields", {})
 
     operation = operations.get(operation_name)
-    operation(card_id, fields, config)
+    try:
+        operation(card_id, fields, config)
+    except Exception as e:
+        print(f"Error executing operation {operation_name} on card {card_id}: {e}")
 
 def patch(operation_name, deck_name, config):    
     note_infos = get_note_infos(deck_name)

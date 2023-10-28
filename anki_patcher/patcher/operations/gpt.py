@@ -3,8 +3,9 @@ import openai
 
 from anki_patcher.util import parse_config
 from anki_patcher.patcher.anki import invoke
+import timeout_decorator
 
-
+@timeout_decorator.timeout(10)
 def execute(card_id, fields, config):
     openai.api_key = os.getenv("OPENAI_API_KEY")
     

@@ -18,6 +18,7 @@ requests = "^2.31.0"
 pillow = "^10.1.0"
 gtts = "^2.4.0"
 openai = "^0.28.1"
+timeout-decorator = "^0.5.0"
 
 [build-system]
 requires = ["poetry-core"]
