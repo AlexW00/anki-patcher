@@ -1,6 +1,6 @@
 # 🩹 Anki Patcher
 
-= modular utility script to patch anki cards en masse
+= modular python script launcher to patch anki cards en masse
 
 ## Basic Idea
 
