@@ -1,6 +1,7 @@
 # removes links of form [[link]]
 # e.g. [[asdf]] -> asdf or [[asdf|111]] -> asdf
-field_names:
+
+field_names: # if field_names is not set, apply replacement to all fields
   - "kanji - note"
   - "words"
 replacements:
