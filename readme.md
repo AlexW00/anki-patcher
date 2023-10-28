@@ -6,7 +6,7 @@
 
 Anki patcher is a script launcher to manipulate anki cards via patch `operations` defined as python functions.
 
-An operation is a python file with an `execute (card_id, fields, config)` function. This function gets called for each card of a specified deck and can execute arbitrary code on the card. The `card_id` and `fields` are provided by anki pacher and the config is a parsed .yml file provided by the user.
+An operation is a python file with an `execute (card_id, fields, config)` function. This function gets called for each card of a specified deck and can execute arbitrary code on the card. The `card_id` and `fields` are provided by anki pacher and the `config` is a parsed .yml file provided by the user.
 
 ## Setup
 
