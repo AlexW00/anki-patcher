@@ -28,9 +28,8 @@ def import_operation(operation):
     if execute_function:
         return {operation_name: execute_function}
     else:
-        print(f"Warning: execute function not found in {operation_file}")
-        return None
-
+        raise Exception(f"Operation {operation_name} does not have an execute function")
+        
 
 def import_operations():
     global operations

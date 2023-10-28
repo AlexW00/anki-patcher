@@ -17,6 +17,7 @@ pyyaml = "^6.0.1"
 requests = "^2.31.0"
 pillow = "^10.1.0"
 gtts = "^2.4.0"
+openai = "^0.28.1"
 
 [build-system]
 requires = ["poetry-core"]

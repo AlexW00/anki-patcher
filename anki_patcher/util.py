@@ -5,7 +5,7 @@ def parse_env(vars):
     env_values = []
     for var in vars:
         value = os.getenv(var)
-        if not value:
+        if value == None:
             raise Exception(f"Environment variable {var} must be set")
         env_values.append(value)
     return env_values
@@ -14,7 +14,7 @@ def parse_config(props, config):
     config_values = []
     for prop in props:
         value = config.get(prop)
-        if not value:
+        if value == None:
             raise Exception(f"Config must specify {prop}")
         config_values.append(value)
     return config_values
