@@ -1,23 +1,28 @@
 import re
 import json
-
 from anki_patcher.util import parse_config, parse_fields
 
 def execute(card_id, fields, config):
-    [field_names, replacements] = parse_config(["field_names","replacements"], config)
+    [replacements] = parse_config(["replacements"], config)
+    field_names = config.get("field_names")
 
-    print(field_names)
     updated_fields = {}
-    for field_name in field_names:
+    target_fields = fields.keys() if field_names is None else field_names
+
+    for field_name in target_fields:
         try:
             print(f"Looking for field {field_name}")
-            field = fields[field_name]
+            field = fields.get(field_name)
+
+            if field is None:
+                print(f"Field {field_name} does not exist on card {card_id}")
+                continue
 
             print(f"Found field {field_name} on card {card_id}")
             field_content = field.get("value")
 
             if field_content is None:
-                print(f"Skipping card {card_id} field {field_name} as it does not exist")
+                print(f"Skipping card {card_id} field {field_name} as it does not have a 'value' key")
                 continue
 
             print(f"Replacing content for field {field_name}")
