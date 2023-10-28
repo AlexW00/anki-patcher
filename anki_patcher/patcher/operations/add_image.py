@@ -2,13 +2,15 @@ import requests
 import os
 from PIL import Image
 import io
-import imghdr
+import timeout_decorator
+
 
 from anki_patcher.patcher.anki import clean_string_of_html_tags
 from anki_patcher.util import parse_config, parse_env, parse_fields
 
 MAX_IMAGE_RETRIES = 5
 
+@timeout_decorator.timeout(10)
 def execute(card_id, fields, config):
     # load env vars via helper function
     env = parse_env(["ANKI_MEDIA_FOLDER", "GOOGLE_API_KEY", "CX"])
