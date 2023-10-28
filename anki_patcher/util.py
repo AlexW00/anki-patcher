@@ -1,4 +1,5 @@
 import os
+import re
 
 def parse_env(vars):
     env_values = []
@@ -26,3 +27,9 @@ def parse_fields(field_names, fields):
             raise Exception(f"Field {field_name} must be set")
         field_values.append(field_value)
     return field_values
+
+
+def remove_furiganas(string):
+    # removes all furigana written with square or round brackets
+    # e.g. 家族[かぞく] -> 家族
+    return re.sub(r'(\[.*?\])|(\(.*?\))', '', string)

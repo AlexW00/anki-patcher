@@ -2,9 +2,10 @@ import os
 import requests
 import json
 import base64
-import re
+
 from anki_patcher.patcher.anki import clean_string_of_html_tags
 from anki_patcher.util import parse_config, parse_env, parse_fields
+from anki_patcher.util import remove_furiganas
 
 def execute(card_id, fields, config):
     env = parse_env(["ANKI_MEDIA_FOLDER", "GOOGLE_API_KEY"])
@@ -16,11 +17,6 @@ def execute(card_id, fields, config):
     no_furigana_query = remove_furiganas(no_html_query)
 
     add_audio_to_card(card_id, no_furigana_query, lang, voice_name, existing_audio, audio_field_name, env)
-
-def remove_furiganas(string):
-    # removes all furigana written with square or round brackets
-    # e.g. 家族[かぞく] -> 家族
-    return re.sub(r'(\[.*?\])|(\(.*?\))', '', string)
 
 def add_audio_to_card(card_id, query, lang, voice_name, existing_audio, audio_field_name, env):
     if existing_audio != "":
