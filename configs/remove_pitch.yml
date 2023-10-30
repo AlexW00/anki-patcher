@@ -1,0 +1,6 @@
+# removes links of form [[link]]
+# e.g. [[asdf]] -> asdf or [[asdf|111]] -> asdf
+field_names:
+  - "pitch"
+replacements:
+  - ".+": ""

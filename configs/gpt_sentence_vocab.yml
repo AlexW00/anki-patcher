@@ -1,0 +1,5 @@
+input_field_names:
+  - japanese
+output_field_name: sentence
+prompt_template: "Generate a short example sentence for the following japanese word: {japanese}. Only return the example sentence, no translation or other tokens."
+do_overwrite_output: false

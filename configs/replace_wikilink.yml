@@ -1,0 +1,9 @@
+# removes links of form [[link]]
+# e.g. [[asdf]] -> asdf or [[asdf|111]] -> asdf
+field_names:
+  - "grammar"
+  - "grammar - note"
+  - "definition"
+  - "definition - note"
+replacements:
+  - "\\[\\[(.*?)(\\|(.*?))?\\]\\]": "\\1"

@@ -1,0 +1,5 @@
+# removes links of form [[link]]
+# e.g. [[asdf]] -> asdf or [[asdf|111]] -> asdf
+
+replacements:
+  - "\\*([^(\\*)]+)\\*": "<i>\\1</i>"

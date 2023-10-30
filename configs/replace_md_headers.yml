@@ -1,0 +1,3 @@
+replacements:
+  - "(?<!^)(#+)": "<br>\\1" # newline for headers not at start
+  - "#+\\s+([^#]*)(<br>)?": "<b>\\1</b>\\2" # replace md headers with html tags
