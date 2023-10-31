@@ -5,8 +5,7 @@ import io
 import timeout_decorator
 
 
-from anki_patcher.patcher.anki import clean_string_of_html_tags
-from anki_patcher.util import parse_config, parse_env, parse_fields
+from anki_patcher.util import parse_config, parse_env, parse_fields, remove_html_tags_bs
 
 MAX_IMAGE_RETRIES = 5
 
@@ -20,7 +19,7 @@ def execute(card_id, fields, config):
     [search_input, existing_image] = parse_fields([search_input_field_name, image_field_name], fields)
 
     # clean search input of html tags
-    clean_query = clean_string_of_html_tags(search_input)
+    clean_query = remove_html_tags_bs(search_input)
     # call the main operation function to add image to card
     add_image_to_card(card_id, clean_query, existing_image, image_field_name, env)
 

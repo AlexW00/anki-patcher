@@ -1,5 +1,7 @@
 import os
 import re
+import regex
+from bs4 import BeautifulSoup
 
 def parse_env(vars):
     env_values = []
@@ -29,8 +31,18 @@ def parse_fields(field_names, fields):
         field_values.append(field_value)
     return field_values
 
+def remove_html_tags_bs(input_text):
+    soup = BeautifulSoup(input_text, "html.parser")
+    return soup.get_text()
 
 def remove_furiganas(string):
     # removes all furigana written with square or round brackets
     # e.g. 家族[かぞく] -> 家族
     return re.sub(r'(\[.*?\])|(\(.*?\))', '', string)
+import regex
+
+def clean_text_for_tts(input_text):
+    # Keeping letters (both Latin and Japanese), Japanese characters, and spaces
+    # Removing numbers and special characters
+    cleaned_text = regex.sub(r'[^\p{L}\p{N}\p{Zs}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}]', '', input_text)
+    return cleaned_text

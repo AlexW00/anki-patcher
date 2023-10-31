@@ -3,23 +3,25 @@ import requests
 import json
 import base64
 
-from anki_patcher.patcher.anki import clean_string_of_html_tags
-from anki_patcher.util import parse_config, parse_env, parse_fields
+from anki_patcher.util import parse_config, parse_env, parse_fields, remove_html_tags_bs
 from anki_patcher.util import remove_furiganas
+from anki_patcher.util import clean_text_for_tts
 
 def execute(card_id, fields, config):
     env = parse_env(["ANKI_MEDIA_FOLDER", "GOOGLE_API_KEY"])
     [text_input_field_name, audio_field_name, lang, voice_name] = parse_config(["text_input_field_name", "audio_field_name", "language", "voice_name"], config)
+    do_override_audio = config.get("do_override_audio", False)
     [search_input, existing_audio] = parse_fields([text_input_field_name, audio_field_name], fields)
 
     # Clean search input of HTML tags
-    no_html_query = clean_string_of_html_tags(search_input)
+    no_html_query = remove_html_tags_bs(search_input)
     no_furigana_query = remove_furiganas(no_html_query)
+    clean_query = clean_text_for_tts(no_furigana_query)
 
-    add_audio_to_card(card_id, no_furigana_query, lang, voice_name, existing_audio, audio_field_name, env)
+    add_audio_to_card(card_id, clean_query, lang, voice_name, do_override_audio, existing_audio, audio_field_name, env)
 
-def add_audio_to_card(card_id, query, lang, voice_name, existing_audio, audio_field_name, env):
-    if existing_audio != "":
+def add_audio_to_card(card_id, query, lang, voice_name, do_override_audio, existing_audio, audio_field_name, env):
+    if existing_audio != "" and do_override_audio == False:
         print(f"Skipping card {card_id} as it already has an audio file")
         return
 
