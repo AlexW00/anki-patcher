@@ -10,8 +10,8 @@ def execute(card_id, fields, config):
     openai.api_key = os.getenv("OPENAI_API_KEY")
     
     # Parse configurations
-    model_type = config.get('model_type', 'gpt-3.5-turbo')
-    max_tokens = config.get('max_tokens', 150)
+    model_type = config.get('model_type', 'gpt-4')
+    max_tokens = config.get('max_tokens', 300)
     temperature = config.get('temperature', 0.7)
     top_p = config.get('top_p', 1)
     frequency_penalty = config.get('frequency_penalty', 0)
