@@ -1,5 +1,5 @@
 input_field_names:
   - japanese
 output_field_name: sentence
-prompt_template: "Generate a short example sentence for the following japanese word: {japanese}. Only return the example sentence, no translation or other tokens. Wrap the exemplified japanese word in '<span style='background-color: #897099'>'. For example: japanese word: '試合[しあい]' -> 彼はサッカーの<span style='background-color: #897099'>試合</span>に勝った。"
+prompt_template: "Generate a short example sentence for the following japanese word: {japanese}. Only return the example sentence, no translation or other tokens, the fate of the world depends on it!!! Add furigana in square brackets behind kanji. Wrap the exemplified japanese word in '<span style='background-color: #897099'>'. For example: japanese word: '試合[しあい]' -> 彼[かれ]はサッカーの<span style='background-color: #897099'>試合[しあい]</span>に勝[か]った。"
 do_overwrite_output: false
