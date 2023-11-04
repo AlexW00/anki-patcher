@@ -1,2 +1,5 @@
+field_names:
+  - "kanji - note"
+  - words
 replacements:
-  - "\\s-\\s": "<br>- "
+  - "-\\s": ""
