@@ -17,6 +17,8 @@ poetry run anki-patcher -o gpt -c "$SCRIPT_DIR/../configs/gpt_sentence_vocab.yml
 pid3=$!
 poetry run anki-patcher -o gpt -c "$SCRIPT_DIR/../configs/gpt_constituents_vocab.yml" -d "$VOCAB_INBOX" patch &
 pid4=$!
+poetry run anki-patcher -o replace -c "$SCRIPT_DIR/../configs/replace_no_pitch.yml" -d "$VOCAB_INBOX" patch &
+pid4=$!
 
 
 wait $pid0 $pid1 $pid2 $pid3 $pid4
