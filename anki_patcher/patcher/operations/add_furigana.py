@@ -51,6 +51,7 @@ def execute(card_id, fields, config):
         new_value = regex.sub(re, lambda m: add_furigana(m.group(0)), value)
 
         new_fields[field_name] = new_value
+        print(f"Field {field_name} has been updated with furigana")
 
     params = {"note": {"id": card_id, "fields": new_fields}}
     invoke("updateNoteFields", params)
