@@ -21,6 +21,13 @@ openai = "^0.28.1"
 timeout-decorator = "^0.5.0"
 regex = "^2023.10.3"
 beautifulsoup4 = "^4.12.2"
+mecab-python3 = "^1.0.8"
+unidic = "^1.1.0"
+furiganamaker = "^1.0.2"
+pykakasi = "^2.2.1"
+jamdict = "^0.1a11.post2"
+wheel = "^0.41.3"
+jamdict-data = "^1.5"
 
 [build-system]
 requires = ["poetry-core"]

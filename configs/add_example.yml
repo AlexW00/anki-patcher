@@ -1,0 +1,3 @@
+source_field_name: japanese
+out_field_name: sentence
+do_overwrite: true
