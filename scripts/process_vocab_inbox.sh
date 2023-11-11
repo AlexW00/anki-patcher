@@ -13,14 +13,15 @@ poetry run anki-patcher -o add_tts -c "$SCRIPT_DIR/../configs/add_tts_default.ym
 pid1=$!
 poetry run anki-patcher -o add_image -c "$SCRIPT_DIR/../configs/add_image_vocab.yml" -d "$VOCAB_INBOX" patch &
 pid2=$!
-poetry run anki-patcher -o gpt -c "$SCRIPT_DIR/../configs/gpt_sentence_vocab.yml" -d "$VOCAB_INBOX" patch &
+poetry run anki-patcher -o add_example -c "$SCRIPT_DIR/../configs/add_example.yml" -d "$VOCAB_INBOX" patch &
 pid3=$!
 poetry run anki-patcher -o gpt -c "$SCRIPT_DIR/../configs/gpt_constituents_vocab.yml" -d "$VOCAB_INBOX" patch &
 pid4=$!
 poetry run anki-patcher -o replace -c "$SCRIPT_DIR/../configs/replace_no_pitch.yml" -d "$VOCAB_INBOX" patch &
-pid4=$!
+pid5=$!
 
+wait $pid0 $pid1 $pid2 $pid3 $pid4 $pid5
 
-wait $pid0 $pid1 $pid2 $pid3 $pid4
+poetry run anki-patcher -o add_furigana -c "$SCRIPT_DIR/../configs/add_furigana_vocab_sentence.yml" -d "$VOCAB_INBOX" patch 
 
 echo "Done processing $VOCAB_INBOX"
