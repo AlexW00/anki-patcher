@@ -1,0 +1,5 @@
+input_field_names:
+  - words
+output_field_name: words
+prompt_template: "Clean up the furigana brackets to make the furigana specific for each kanji. For example, if the input is '色彩(しきさい)=colour; color; hue; tints', reply with '色(しき)彩(さい)=colour; color; hue; tints'. DO NOT MAKE ANY OTHER CHANGES. ONLY RETURN THE CLEANED UP INPUT, do not add any other characters. The fate of the world depends on it! Input: '{words}'."
+do_overwrite_output: true

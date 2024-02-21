@@ -1,6 +1,6 @@
 audio_field_name: audio
 text_input_field_name: japanese
-do_override_audio: True
+do_override_audio: False
 
 # see https://cloud.google.com/text-to-speech/docs/voices
 language: ja-JP

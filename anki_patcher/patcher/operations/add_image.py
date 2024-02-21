@@ -29,8 +29,8 @@ def execute(card_id, fields, config):
     clean_query = clean_query.split(", ")
     # remove empty strings
     clean_query = list(filter(None, clean_query))
-    # take only the first 5 words
-    clean_query = clean_query[:2]
+    # take only the first word
+    clean_query = clean_query[:1]
     # join back with " "
     clean_query = ", ".join(clean_query)
     # call the main operation function to add image to card
