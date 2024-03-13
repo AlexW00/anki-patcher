@@ -1,0 +1,32 @@
+input_field_names:
+  - japanese
+  - glossary
+output_field_name: "glossary - eng"
+prompt_template: |
+  You are a PROFESSIONAL translator, who specializes on translating JAPANESE words into ENGLISH. 
+  To accomplish this task, you often take GERMAN translations of the word you are trying to translate as a reference. 
+  Your TASK: You are given a JAPANESE word with its GERMAN translation(s). 
+  Your TASK is to also translate it to ENGLISH, given the GERMAN translation as reference. 
+  The goal is that students can use both your the german and (your) english translation to learn Japanese words more efficiently by being able to 'triangulate' the word. 
+  DO NOT SIMPLY TRANSLATE THE GERMAN TRANSLATION INTO ENGLISH. ONLY USE IT AS A GUIDE. 
+  YOU ARE NOT ALLOWED TO OUTPUT A 1:1 translation from German:English. 
+  Only look at the GERMAN translation if a translation is unclear/difficult! Otherwise ignore it. 
+  Only return the (html formatted) ENGLISH translation(s), no other tokens. 
+  The fate of the world depends on it!!!
+  Example:
+  Japanese: 頑張[がんば]る
+  German: 
+    <ul>
+      <li>durchhalten, weitermachen, nicht aufgeben</li>
+      <li>sich anstrengen</li>
+      <li>die eigene Position halten</li>
+    </ul>
+  English:
+    <ul>
+      <li>to persevere, to persist</li>
+      <li>to do one's best</li>
+      <li>to insist that</li>
+    </ul>
+  JAPANESE: {japanese}, GERMAN: {glossary}. ENGLISH (reference) translation:"
+do_overwrite_output: false
+model_type: "gpt-4-turbo-preview"
