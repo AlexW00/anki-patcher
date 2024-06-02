@@ -1,0 +1,5 @@
+field_names:
+  - "glossary - eng"
+replacements:
+  - "English:": ""
+  - "^(\\s.).?$": ""

@@ -27,6 +27,6 @@ prompt_template: |
       <li>to do one's best</li>
       <li>to insist that</li>
     </ul>
-  JAPANESE: {japanese}, GERMAN: {glossary}. ENGLISH (reference) translation:"
+  JAPANESE: {japanese}, GERMAN: {glossary}. ENGLISH:"
 do_overwrite_output: false
-model_type: "gpt-4-turbo-preview"
+model_type: "gpt-4o"

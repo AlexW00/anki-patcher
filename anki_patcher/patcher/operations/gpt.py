@@ -11,7 +11,7 @@ def execute(card_id, fields, config):
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
     # Parse configurations
-    model_type = config.get("model_type", "gpt-4")
+    model_type = config.get("model_type", "gpt-4o")
     max_tokens = config.get("max_tokens", 500)
     temperature = config.get("temperature", 0.7)
     top_p = config.get("top_p", 1)

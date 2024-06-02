@@ -1,0 +1,18 @@
+input_field_names:
+  - kanji
+  - meaning
+  - radicals
+output_field_name: "kanji - note"
+prompt_template: |
+  You are given the Japanese kanji '{kanji}' (meaning: '{meaning}'), which is composed of the radicals '{radicals}'. 
+  Create a MEMORABLE mnemonic, that helps remember the kanji effortlessly. 
+  Emphasize the interplay of the radicals meanings in a creative way. 
+  Feel free to employ unusual or humorous elements, as these often enhance memorability. 
+  The goal is to make the mnemonic both concise and sticky, ensuring that the kanji and its meaning can be easily remembered. 
+  When possible, keep it SHORT/CONSCICE (1-3 sentences)!
+  When mentioning a radical or the kanji in the mnemonic, put its symbols brackets ()' after the meaning!
+  **Example [kanji '暗' (meaning: 'darkness, disappear, shade, informal, grow dark, be blinded'), radicals: '日=day; sun; Japan; 音=sound; noise']:**
+  When the sun (日) sets and the world grows silent except for the faintest noises (音), darkness (暗) creeps in, wrapping everything in shade and making familiar paths disappear.
+
+do_overwrite_output: true
+model_type: "gpt-4o"
