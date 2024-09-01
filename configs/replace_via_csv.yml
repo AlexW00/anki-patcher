@@ -1,0 +1,5 @@
+source_field: kanji
+target_field: meaning
+csv_file: res/kanji-keywords-6th-edition.csv
+csv_source_column: 0
+csv_target_column: 4
