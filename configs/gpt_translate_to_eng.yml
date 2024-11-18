@@ -14,6 +14,7 @@ prompt_template: |
   Only return the (html formatted) ENGLISH translation(s), no other tokens. 
   The fate of the world depends on it!!!
   Example:
+  ---
   Japanese: 頑張[がんば]る
   German: 
     <ul>
@@ -27,6 +28,11 @@ prompt_template: |
       <li>to do one's best</li>
       <li>to insist that</li>
     </ul>
-  JAPANESE: {japanese}, GERMAN: {glossary}. ENGLISH:"
+  ---
+  JAPANESE: {japanese}
+  GERMAN: 
+  {glossary}
+  ENGLISH:
+  "
 do_overwrite_output: false
 model_type: "gpt-4o"
