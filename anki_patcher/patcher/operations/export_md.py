@@ -66,7 +66,7 @@ def execute(note_id, fields, config):
     # file location is out_dir/deck_name/card_id.md
     # important: split the deck name by :: and re join with /
     filename = filename_template.format(**input_field_values)
-    if filename_template_regex:
+    if filename_template_regex and filename_template_regex != "":
         filename = re.sub(filename_template_regex, "", filename)
     out_file = os.path.join(out_dir, "/".join(deck_name.split("::")), filename + ".md")
 

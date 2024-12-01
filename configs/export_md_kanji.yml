@@ -5,6 +5,7 @@ input_field_names:
 - kunyomi
 - onyomi
 out_dir: /home/aw/Documents/Obsidian/anki
-template: "- radicals: {radicals}\n- kunyomi: {kunyomi}\n- onyomi: {onyomi}\n- meaning: {meaning}"
+template: "- meaning: {meaning}\n- radicals: {radicals}\n```\n- kunyomi: {kunyomi}\n- onyomi: {onyomi}\n```\n#kanji"
 filename_template: "{kanji}"
 do_remove_html_from_fields: true
+filename_template_regex: ""
