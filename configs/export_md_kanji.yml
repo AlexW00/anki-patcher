@@ -1,0 +1,10 @@
+input_field_names:
+- kanji
+- radicals
+- meaning
+- kunyomi
+- onyomi
+out_dir: /home/aw/Documents/Obsidian/anki
+template: "- radicals: {radicals}\n- kunyomi: {kunyomi}\n- onyomi: {onyomi}\n- meaning: {meaning}"
+filename_template: "{kanji}"
+do_remove_html_from_fields: true

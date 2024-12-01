@@ -1,0 +1,10 @@
+input_field_names:
+- japanese
+- glossary
+- japanese - constituents
+out_dir: /home/aw/Documents/Obsidian/anki
+template: "- constituents: {japanese - constituents}\nglossary:\n{glossary}"
+do_remove_html_from_fields: false
+filename_template: "{japanese}"
+# remove all contents in square or round brackets or html
+filename_template_regex: '\(.*?\)|\[.*?\]|\{.*?\}|<.*?>'
