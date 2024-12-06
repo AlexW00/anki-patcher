@@ -90,7 +90,7 @@ def patch_async(operation_name, deck_name, config):
     print(f"Patching {len(note_infos)} cards in deck: {deck_name}")
     results = []
 
-    pool = multiprocessing.Pool(7)
+    pool = multiprocessing.Pool(10)
     for note_info in note_infos:
         result = pool.apply_async(
             execute_operation, (note_info, config, operation_name)

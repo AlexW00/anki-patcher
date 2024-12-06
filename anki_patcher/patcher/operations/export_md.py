@@ -5,11 +5,13 @@ from anki_patcher.util import parse_config
 from anki_patcher.patcher.anki import invoke
 import timeout_decorator
 import re
+from retry import retry
 
 
 # exports all cards of a specified deck to markdown files
 # by filling out the user provided template with the card's fields
 @timeout_decorator.timeout(10)
+@retry(tries=3, delay=2)
 def execute(note_id, fields, config):
     # Parse configurations
     [

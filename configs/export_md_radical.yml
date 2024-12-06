@@ -1,0 +1,9 @@
+input_field_names:
+  - Radical
+  - Meaning
+  - Reading
+out_dir: /Users/aweichart/Documents/Obsidian/Kanji
+template: "### Meaning\n\n{Meaning}\n\n### Reading\n\n```\n{Reading}\n```\n\n#radical"
+filename_template: "{Radical}"
+do_remove_html_from_fields: true
+filename_template_regex: ""

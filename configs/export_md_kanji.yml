@@ -1,11 +1,11 @@
 input_field_names:
-- kanji
-- radicals
-- meaning
-- kunyomi
-- onyomi
-out_dir: /home/aw/Documents/Obsidian/anki
-template: "- meaning: {meaning}\n- radicals: {radicals}\n```\n- kunyomi: {kunyomi}\n- onyomi: {onyomi}\n```\n#kanji"
-filename_template: "{kanji}"
+  - Kanji
+  - Components
+  - Keyword
+  - Kunyomi
+  - Onyomi
+out_dir: /Users/aweichart/Documents/Obsidian/Kanji
+template: "### Meaning\n\n{Keyword}\n\n### Components\n\n{Components}\n\n### Readings\n\n```\n- Kunyomi: {Kunyomi}\n- Onyomi: {Onyomi}\n```\n\n#kanji"
+filename_template: "{Kanji}"
 do_remove_html_from_fields: true
 filename_template_regex: ""

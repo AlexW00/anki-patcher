@@ -11,7 +11,9 @@ An operation is a python file with an `execute (card_id, fields, config)` functi
 ## Setup
 
 - run `poetry install`
+- run `poetry shell` and `python -m unidic download` to download the unidic dictionary
 - add an .env file to the root of the project (based on .env.example)
+- install anki-connect add-on in your anki desktop app
 
 ## Available commands
 

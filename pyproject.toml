@@ -28,6 +28,7 @@ pykakasi = "^2.2.1"
 jamdict = "^0.1a11.post2"
 wheel = "^0.41.3"
 jamdict-data = "^1.5"
+retry = "^0.9.2"
 
 [build-system]
 requires = ["poetry-core"]
