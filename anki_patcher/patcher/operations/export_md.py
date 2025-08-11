@@ -1,5 +1,4 @@
 import os
-import openai
 
 from anki_patcher.util import parse_config
 from anki_patcher.patcher.anki import invoke

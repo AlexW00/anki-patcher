@@ -8,7 +8,17 @@ import timeout_decorator
 
 @timeout_decorator.timeout(10)
 def execute(card_id, fields, config):
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+    # Configure OpenAI-compatible client to use OpenRouter by default
+    # Env precedence: OPENROUTER_API_KEY > OPENAI_API_KEY (for backward compatibility)
+    api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise Exception(
+            "Missing API key. Set OPENROUTER_API_KEY (preferred) or OPENAI_API_KEY."
+        )
+
+    # Allow override via env; default to OpenRouter's OpenAI-compatible endpoint
+    openai.api_base = os.getenv("OPENAI_API_BASE", "https://openrouter.ai/api/v1")
+    openai.api_key = api_key
 
     # Parse configurations
     model_type = config.get("model_type", "gpt-4o")
@@ -53,6 +63,16 @@ def execute(card_id, fields, config):
     initial_message = {"role": "user", "content": prompt}
     messages.append(initial_message)
 
+    # Map model name to OpenRouter format if needed (prefix vendor when missing)
+    def _to_openrouter_model(name: str) -> str:
+        if "/" in name:
+            return name
+        # Heuristic: OpenAI family models (gpt-*, o3, o4-*)
+        lower = name.lower()
+        if lower.startswith("gpt") or lower.startswith("o"):
+            return f"openai/{name}"
+        return name
+
     options = {
         "max_tokens": max_tokens,
         "temperature": temperature,
@@ -62,7 +82,7 @@ def execute(card_id, fields, config):
         "stop": stop,
         "stream": False,
         "messages": messages,
-        "model": model_type,
+        "model": _to_openrouter_model(model_type),
     }
     try:
         response = openai.ChatCompletion.create(**options)
