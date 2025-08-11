@@ -10,17 +10,60 @@ An operation is a python file with an `execute (card_id, fields, config)` functi
 
 ## Setup
 
-- run `poetry install`
-- run `poetry shell` and `python -m unidic download` to download the unidic dictionary
-- add an .env file to the root of the project (based on .env.example)
-- install anki-connect add-on in your anki desktop app
+- Option A (local dev):
+  - run `poetry install`
+  - run `poetry shell` and `python -m unidic download` to download the unidic dictionary
+  - add an .env file to the root of the project (based on .env.example)
+- Option B (Docker, no local Python required):
+  - ensure the AnkiConnect add-on is installed and your Anki Desktop app is running (defaults to http://localhost:8765)
+  - Docker will reach your host's AnkiConnect via `http://host.docker.internal:8765` (pre-configured)
 
 ## Available commands
 
-To execute an operation, run `poetry run anki-patcher <--flags> <command>`
+To execute an operation locally, run `poetry run anki-patcher <--flags> <command>`
 
 - `poetry run anki-patcher list`: lists all available patch operations
 - `poetry run anki-patcher patch -o <operation> -d <deck-name> -c <path-to-config.yml> `: executes the specified operation on all cards of the deck
+
+## Running with Docker
+
+No need to install Python or Poetry. The container image includes all dependencies and downloads `unidic` at build time.
+
+Quickstart with docker compose (recommended):
+
+```
+# List available operations
+docker compose run --rm anki-patcher list
+
+# Run an operation (example: gpt)
+docker compose run --rm \
+  -e OPENROUTER_API_KEY=your_key \
+  anki-patcher patch -o gpt -d "Your::Deck" -c /work/example_configs/gpt_example.yml
+```
+
+Notes:
+
+- Anki must be running on your Mac with the AnkiConnect add-on enabled.
+- The container uses `ANKI_CONNECT_URL=http://host.docker.internal:8765` by default so it can call your host's AnkiConnect.
+- Mount your configs via the provided `docker-compose.yml`. By default, `./configs` and `./example_configs` are available at `/work/configs` and `/work/example_configs`.
+- If an operation needs to write media files, set `ANKI_MEDIA_FOLDER` to a valid path reachable from the container. Two options:
+  1. Pass your host path directly (read/write): `-e ANKI_MEDIA_FOLDER="/absolute/host/path/to/collection.media"` and also mount that path into the container at the same location using `volumes:`.
+  2. Or mount into the container at `/anki_media` and set `-e ANKI_MEDIA_FOLDER=/anki_media`.
+
+Example with media mount:
+
+```
+docker compose run --rm \
+  -e ANKI_MEDIA_FOLDER=/anki_media \
+  -v "$HOME$/Library/Application\ Support/Anki2/User\ 1/collection.media":/anki_media:rw \
+  anki-patcher patch -o add_image -d "German::A1" -c /work/example_configs/add_image_example.yml
+```
+
+Optional environment variables:
+
+- OPENROUTER_API_KEY or OPENAI_API_KEY (for `gpt` op)
+- OPENAI_API_BASE (defaults to https://openrouter.ai/api/v1)
+- GOOGLE_API_KEY and CX (for `add_image` op)
 
 ### Stock operations:
 

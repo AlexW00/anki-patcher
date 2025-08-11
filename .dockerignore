@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.dist/
+.git/
+.gitignore
+.mypy_cache/
+.poetry/
+.pytest_cache/
+.vscode/
+.DS_Store
+.idea/
+.env
+**/.env
+**/*.log
+**/node_modules/
+**/.venv/
+**/venv/
+
+# Exclude local data folders we don't need in the image
+res/
+scripts/
+example.env
+poetry.lock
