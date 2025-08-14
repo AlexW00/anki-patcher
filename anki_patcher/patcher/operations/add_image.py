@@ -1,5 +1,5 @@
 import requests
-import os
+import base64
 from PIL import Image
 import io
 import timeout_decorator
@@ -13,7 +13,8 @@ MAX_IMAGE_RETRIES = 5
 @timeout_decorator.timeout(10)
 def execute(card_id, fields, config):
     # load env vars via helper function
-    env = parse_env(["ANKI_MEDIA_FOLDER", "GOOGLE_API_KEY", "CX"])
+    # We store images via AnkiConnect; no need for ANKI_MEDIA_FOLDER
+    env = parse_env(["GOOGLE_API_KEY", "CX"])
     # load config vars via helper function
     [search_input_field_name, image_field_name] = parse_config(
         ["search_input_field_name", "image_field_name"], config
@@ -37,12 +38,12 @@ def execute(card_id, fields, config):
     add_image_to_card(card_id, clean_query, existing_image, image_field_name, env)
 
 
-def is_valid_image(filepath):
+def is_valid_image_bytes(image_data):
     try:
-        img = Image.open(filepath)
+        img = Image.open(io.BytesIO(image_data))
         img.verify()
         return True
-    except:
+    except Exception:
         return False
 
 
@@ -59,7 +60,8 @@ def add_image_to_card(card_id, query, existing_image, image_field_name, env):
         print(f"Skipping card {card_id} as it already has an image")
         return
 
-    [media_folder, google_api_key, cx] = env
+    # env: [GOOGLE_API_KEY, CX]
+    [google_api_key, cx] = env
     print(f"Searching for image: {query}")
 
     params = {
@@ -84,37 +86,57 @@ def add_image_to_card(card_id, query, existing_image, image_field_name, env):
             print(f"No images found for query: {query}")
             return
 
-        for attempt in range(MAX_IMAGE_RETRIES):
-            image_url = data["items"][attempt]["link"]
-            image_data = requests.get(image_url).content
+        items = data["items"]
+        total_attempts = min(len(items), MAX_IMAGE_RETRIES)
+        for attempt in range(total_attempts):
+            image_url = items[attempt]["link"]
+            image_resp = requests.get(image_url, timeout=10)
+            if image_resp.status_code != 200:
+                print(
+                    f"Failed to fetch image URL (status {image_resp.status_code}), retrying... ({attempt + 1}/{total_attempts})"
+                )
+                continue
+            image_data = image_resp.content
             image_type = get_image_type(image_data)
 
             valid_image_types = ["jpeg", "png", "jpg"]
             if image_type not in valid_image_types:
-                print(f"Invalid image downloaded, retrying... ({attempt + 1}/3)")
+                print(
+                    f"Invalid image type, retrying... ({attempt + 1}/{total_attempts})"
+                )
                 continue
 
             image_filename = f"{card_id}.{image_type}"
-            filepath = os.path.join(media_folder, image_filename)
-
-            with open(filepath, "wb") as f:
-                f.write(image_data)
-
-            if is_valid_image(filepath):
-                # Update the Anki card to reference the image by its filename
-                field_data = f'<img src="{image_filename}">'
-                params = {
-                    "note": {"id": card_id, "fields": {image_field_name: field_data}}
-                }
+            if is_valid_image_bytes(image_data):
+                # Store media in Anki via AnkiConnect to avoid host/container path issues
                 from anki_patcher.patcher.anki import invoke
 
-                invoke("updateNoteFields", params)
+                b64 = base64.b64encode(image_data).decode("utf-8")
+                store_params = {"filename": image_filename, "data": b64}
+                store_result = invoke("storeMediaFile", store_params)
+                if store_result.get("error"):
+                    print(f"AnkiConnect error storing media: {store_result['error']}")
+                    continue
+
+                # Update the Anki card to reference the image by its filename
+                field_data = f'<img src="{image_filename}">'
+                update_params = {
+                    "note": {"id": card_id, "fields": {image_field_name: field_data}}
+                }
+                update_result = invoke("updateNoteFields", update_params)
+                if update_result.get("error"):
+                    print(f"AnkiConnect error updating field: {update_result['error']}")
+                    continue
                 print(f"Added image to card {card_id}")
                 break
             else:
-                print(f"Invalid image downloaded, retrying... ({attempt + 1}/3)")
-                if attempt == MAX_IMAGE_RETRIES - 1:
-                    print("Failed to download a valid image after 3 attempts")
+                print(
+                    f"Invalid image content, retrying... ({attempt + 1}/{total_attempts})"
+                )
+                if attempt == total_attempts - 1:
+                    print(
+                        f"Failed to download a valid image after {total_attempts} attempts"
+                    )
     except Exception as e:
         print(f"Error downloading image: {e}")
         return

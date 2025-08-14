@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: anki-patcher:latest
     env_file:
       - .env
     # Mount your configs and any input/output paths into /work
@@ -16,6 +15,7 @@ services:
     environment:
       # Let the CLI reach AnkiConnect running on the host's Anki app
       - ANKI_CONNECT_URL=http://host.docker.internal:8765
+      - ANKI_MEDIA_FOLDER=$ANKI_MEDIA_FOLDER
     # Allow overriding command at runtime. Default is to print help.
     entrypoint: ["anki-patcher"]
     command: ["list"]

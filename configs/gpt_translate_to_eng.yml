@@ -35,4 +35,4 @@ prompt_template: |
   ENGLISH:
   "
 do_overwrite_output: false
-model_type: "gpt-5"
+model_type: "gpt-oss-120b"
