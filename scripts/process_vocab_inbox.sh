@@ -23,8 +23,10 @@ $RUN_COMMAND -o gpt -c "$DOCKER_CONFIG_DIR/gpt_translate_to_eng.yml" -d "$VOCAB_
 pid5=$!
 $RUN_COMMAND -o replace -c "$DOCKER_CONFIG_DIR/replace_no_pitch.yml" -d "$VOCAB_INBOX" patch-async &
 pid6=$!
+poetry run anki-patcher -o gpt -c "$SCRIPT_DIR/../configs/gpt_vocab_note_ger.yml" -d "$VOCAB_INBOX" patch-async &
+pid7=$!
 
-wait $pid0 $pid1 $pid2 $pid3 $pid4 $pid5 $pid6
+wait $pid0 $pid1 $pid2 $pid3 $pid4 $pid5 $pid6 $pid7
 
 $RUN_COMMAND -o replace -c "$DOCKER_CONFIG_DIR/replace_english_empty_line.yml" -d "$VOCAB_INBOX" patch-async
 $RUN_COMMAND -o add_furigana -c "$DOCKER_CONFIG_DIR/add_furigana_vocab_sentence.yml" -d "$VOCAB_INBOX" patch-async
