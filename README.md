@@ -46,16 +46,17 @@ Notes:
 - Anki must be running on your Mac with the AnkiConnect add-on enabled.
 - The container uses `ANKI_CONNECT_URL=http://host.docker.internal:8765` by default so it can call your host's AnkiConnect.
 - Mount your configs via the provided `docker-compose.yml`. By default, `./configs` and `./example_configs` are available at `/work/configs` and `/work/example_configs`.
-- If an operation needs to write media files, set `ANKI_MEDIA_FOLDER` to a valid path reachable from the container. Two options:
-  1. Pass your host path directly (read/write): `-e ANKI_MEDIA_FOLDER="/absolute/host/path/to/collection.media"` and also mount that path into the container at the same location using `volumes:`.
+- Stock media operations (`add_image`, `add_tts`) store files via AnkiConnect (`storeMediaFile`), so they work from Docker without mounting your `collection.media`.
+- If a custom operation writes media files directly, set `ANKI_MEDIA_FOLDER` to a valid path reachable from the container and mount it. Two options:
+  1. Pass your host path directly (read/write): `-e ANKI_MEDIA_FOLDER="/absolute/host/path/to/collection.media"` and mount that path into the container at the same location using `volumes:`.
   2. Or mount into the container at `/anki_media` and set `-e ANKI_MEDIA_FOLDER=/anki_media`.
 
-Example with media mount:
+Example with media mount (only needed for custom operations that write directly to the media folder):
 
 ```
 docker compose run --rm \
   -e ANKI_MEDIA_FOLDER=/anki_media \
-  -v "$HOME$/Library/Application\ Support/Anki2/User\ 1/collection.media":/anki_media:rw \
+  -v "$HOME/Library/Application Support/Anki2/User 1/collection.media":/anki_media:rw \
   anki-patcher patch -o add_image -d "German::A1" -c /work/example_configs/add_image_example.yml
 ```
 

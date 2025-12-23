@@ -1,4 +1,3 @@
-import os
 import requests
 import json
 import base64
@@ -8,7 +7,7 @@ from anki_patcher.util import remove_furiganas
 from anki_patcher.util import clean_text_for_tts
 
 def execute(card_id, fields, config):
-    env = parse_env(["ANKI_MEDIA_FOLDER", "GOOGLE_API_KEY"])
+    env = parse_env(["GOOGLE_API_KEY"])
     [text_input_field_name, audio_field_name, lang, voice_name] = parse_config(["text_input_field_name", "audio_field_name", "language", "voice_name"], config)
     do_override_audio = config.get("do_override_audio", False)
     [search_input, existing_audio] = parse_fields([text_input_field_name, audio_field_name], fields)
@@ -25,7 +24,7 @@ def add_audio_to_card(card_id, query, lang, voice_name, do_override_audio, exist
         print(f"Skipping card {card_id} as it already has an audio file")
         return
 
-    [media_folder, google_api_key] = env
+    [google_api_key] = env
     print(f"Generating TTS audio for: {query}")
 
     url = "https://texttospeech.googleapis.com/v1/text:synthesize"
@@ -48,22 +47,24 @@ def add_audio_to_card(card_id, query, lang, voice_name, do_override_audio, exist
         body = response.json()
         audio_content = base64.b64decode(body['audioContent'])
         audio_filename = f"{card_id}.mp3"
-        filepath = os.path.join(media_folder, audio_filename)
-        
-        with open(filepath, 'wb') as out:
-            out.write(audio_content)
-            print(f"Audio content written to file {audio_filename}")
+
+        # Store media in Anki via AnkiConnect to avoid host/container path issues
+        from anki_patcher.patcher.anki import invoke
+
+        b64 = base64.b64encode(audio_content).decode("utf-8")
+        store_params = {"filename": audio_filename, "data": b64, "deleteExisting": True}
+        store_result = invoke("storeMediaFile", store_params)
+        if store_result.get("error"):
+            print(f"AnkiConnect error storing media: {store_result['error']}")
+            return
 
         # Update the Anki card to reference the audio file
         field_data = f'[sound:{audio_filename}]'
-        params = {
-            "note": {
-                "id": card_id,
-                "fields": {audio_field_name: field_data}
-            }
-        }
-        from anki_patcher.patcher.anki import invoke
-        invoke("updateNoteFields", params)
+        params = {"note": {"id": card_id, "fields": {audio_field_name: field_data}}}
+        update_result = invoke("updateNoteFields", params)
+        if update_result.get("error"):
+            print(f"AnkiConnect error updating field: {update_result['error']}")
+            return
         print(f"Added audio to card {card_id}")
     except Exception as e:
         print(f"Error generating TTS audio: {e}")

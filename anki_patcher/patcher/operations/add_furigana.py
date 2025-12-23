@@ -1,7 +1,6 @@
 from anki_patcher.patcher.anki import invoke
 
 from anki_patcher.util import (
-    parse_env,
     remove_furiganas,
 )
 
@@ -25,7 +24,6 @@ def add_furigana(text):
 
 
 def execute(card_id, fields, config):
-    env = parse_env(["ANKI_MEDIA_FOLDER"])
     if config is None:
         config = {}
 

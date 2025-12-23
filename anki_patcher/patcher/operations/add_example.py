@@ -6,7 +6,6 @@ from anki_patcher.patcher.anki import invoke
 
 from anki_patcher.util import (
     parse_config,
-    parse_env,
     remove_furiganas,
     remove_html_tags_bs,
 )
@@ -59,8 +58,6 @@ def fetch_example_sentences(japanese_word, num_example_sentences):
 
 
 def execute(card_id, fields, config):
-    env = parse_env(["ANKI_MEDIA_FOLDER"])
-
     [source_field_name, out_field_name] = parse_config(
         ["source_field_name", "out_field_name"], config
     )
