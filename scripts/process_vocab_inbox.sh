@@ -9,6 +9,14 @@ DOCKER_CONFIG_DIR="/work/configs"
 RUN_COMMAND="${SCRIPT_DIR}/anki-patcher.sh"
 
 # Run commands in parallel
+if [[ -z "${ANKI_PATCHER_DOCKER_BUILT:-}" ]]; then
+  (
+    cd "$SCRIPT_DIR/.."
+    docker compose build anki-patcher
+  )
+  export ANKI_PATCHER_DOCKER_BUILT=1
+fi
+
 $RUN_COMMAND -o trim_list_items -c "$DOCKER_CONFIG_DIR/trim_list_items_default.yml" -d "$VOCAB_INBOX" patch-async &
 pid0=$!
 $RUN_COMMAND -o add_tts -c "$DOCKER_CONFIG_DIR/add_tts_default.yml" -d "$VOCAB_INBOX" patch-async &
@@ -23,7 +31,7 @@ $RUN_COMMAND -o gpt -c "$DOCKER_CONFIG_DIR/gpt_translate_to_eng.yml" -d "$VOCAB_
 pid5=$!
 $RUN_COMMAND -o replace -c "$DOCKER_CONFIG_DIR/replace_no_pitch.yml" -d "$VOCAB_INBOX" patch-async &
 pid6=$!
-poetry run anki-patcher -o gpt -c "$SCRIPT_DIR/../configs/gpt_vocab_note_ger.yml" -d "$VOCAB_INBOX" patch-async &
+$RUN_COMMAND -o gpt -c "$DOCKER_CONFIG_DIR/gpt_vocab_note_ger.yml" -d "$VOCAB_INBOX" patch-async &
 pid7=$!
 
 wait $pid0 $pid1 $pid2 $pid3 $pid4 $pid5 $pid6 $pid7

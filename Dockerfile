@@ -17,7 +17,7 @@ RUN apt-get update \
 
 # Copy only what we need to build/install the package
 COPY pyproject.toml /app/pyproject.toml
-COPY readme.md /app/README.md
+COPY README.md /app/README.md
 COPY anki_patcher /app/anki_patcher
 
 # Install the package using PEP 517 build backend (poetry-core). No Poetry CLI needed.
