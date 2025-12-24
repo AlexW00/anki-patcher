@@ -35,7 +35,7 @@ Purpose: make AI agents productive fast. Keep edits minimal, repo-specific, and 
 - Not all notes have all fields; skip gracefully. HTML often present in field values.
 - Validate/media-type when writing to `ANKI_MEDIA_FOLDER`.
 - Handle AnkiConnect non-200s; continue patching others.
-- `openai` is 0.x; `gpt.py` uses ChatCompletion with model default `gpt-4o`.
+- `openai` is 0.x; `gpt.py` uses ChatCompletion with model default `gpt-5`.
 
 ## Add a new operation
 

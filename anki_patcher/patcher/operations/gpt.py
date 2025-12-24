@@ -21,7 +21,7 @@ def execute(card_id, fields, config):
     openai.api_key = api_key
 
     # Parse configurations
-    model_type = config.get("model_type", "gpt-oss-120b")
+    model_type = config.get("model_type", "gpt-5")
     max_tokens = config.get("max_tokens", 500)
     temperature = config.get("temperature", 0.7)
     top_p = config.get("top_p", 1)

@@ -4,4 +4,4 @@ input_field_names:
 output_field_name: "japanese - constituents"
 prompt_template: 'Wenn das Wort (Japanisch) aus mehreren Bestandteilen besteht, erkläre die einzelnen Teile. Bestandteile können Kanji Zeichen, Hiragana, oder grammatikalische Elemente sein. Unterscheide zwischen Kanjis Zeichen und Wörtern. Verwende NUR DAS FORMAT aus den Beispielen. Do NOT write an explaination. DO IGNORE FURIGANA, which is written in BRACKETS (round or sqare!!!), do not include it!===BEISPIEL 1: """Wort: ''冬(ふゆ)休[やす]み'' (Pause, Urlaub, Abwesenheit) Bestandteile: 冬 (Kanji: Winter) + 休み (Wort: Urlaub, Pause) === BEISPIEL 2: """Wort: ''見[み]る'' (sehen, lesen, prüfen) Bestandteile: 見 (Kanji: sehen) + る (Endung: Verb) === BEISPIEL 3: """Wort: ''雄叫[おたけ]び'' (Kampfruf) Bestandteile: 雄 (Kanji: männlich) + 叫び (Wort: Schrei) === BEISPIEL 4: """Wort: ''通信販売[つうしんはんばい]'' (Versandhandel) Bestandteile: (通(Kanji: Verkehr)信(Kanji: Vertrauen)) (Wort: Kommunikation) + (販(Kanji: kommerziell verfügbar machen)売(Kanji: verkaufen)) (Wort: Verkauf) === Wort: ''{japanese}'' ({glossary}) Bestandteile: '
 do_overwrite_output: false
-model_type: gpt-oss-120b
+model_type: gpt-5

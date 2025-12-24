@@ -4,4 +4,4 @@ input_field_names:
 output_field_name: "glossary - note"
 prompt_template: 'Ich werde dir ein Japanisches Wort und dessen Übersetzung schicken. Deine Aufgabe ist es, FALLS NÖTIG, in einem Satz einen Kommentar dazu zu schreiben, FALLS ES BESONDERHEITEN ZU DEM WORT GIBT, damit meine Karteikarten besser verständlich sind. Z.B. für "弾く" , "spielen" solltest du antworten: "Saiten- oder Tasteninstrument". Für Wörter die anhand ihrer Übersetzung bereits klar sind, antworte mit "-". Z.B.: "祝日", "Feiertag" solltest du antworten: "-". ANTWORTE NUR MIT DEM KOMMENTAR, SONST NICHTS. Dein Kommentar soll KEIN Japanisch enthalten. Wort und Übersetzung: "{japanese}", "{glossary}"'
 do_overwrite_output: false
-model_type: gpt-4o
+model_type: gpt-5

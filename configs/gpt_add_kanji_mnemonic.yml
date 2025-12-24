@@ -15,4 +15,4 @@ prompt_template: |
   When the sun (日) sets and the world grows silent except for the faintest noises (音), darkness (暗) creeps in, wrapping everything in shade and making familiar paths disappear.
 
 do_overwrite_output: true
-model_type: "gpt-oss-120b"
+model_type: "gpt-5"
