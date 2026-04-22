@@ -18,12 +18,22 @@ def fetch_example_sentences(japanese_word, num_example_sentences):
     # Construct the URL
     url = f"https://massif.la/ja/search?q={encoded_word}"
 
+    # Massif blocks the default python-requests User-Agent, so pretend to be a browser.
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        ),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "ja,en-US;q=0.8,en;q=0.5",
+    }
+
     # Make the HTTP request
-    response = requests.get(url)
+    response = requests.get(url, headers=headers, timeout=15)
 
     # Check if the request was successful
     if response.status_code != 200:
-        return ["Error: Unable to fetch data from Massif"]
+        return [f"Error: Unable to fetch data from Massif (status {response.status_code})"]
 
     # Parse the HTML content
     soup = BeautifulSoup(response.text, "html.parser")
